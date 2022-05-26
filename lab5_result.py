@@ -3,9 +3,7 @@ from numpy import linalg as la
 import time
 try:
     K = 2
-    #int(input("Введите число K = "))
     N = 10
-    #int(input("Введите положительное число N = "))
     while N <= 0:
         print("Число N не подходит заданному условию. Пожалуйста, введите N ещё раз.")
         N = int(input("Введите положительное число N = "))
@@ -92,7 +90,6 @@ try:
         np.set_printoptions(suppress=True)
         print(result3)
     finish = time.time()
-    result = finish - start
-    #print("Время выполнения программы: " + str(result) + " секунд.")
+    result_time = finish - start
 except ValueError:
     print("Это не число")
