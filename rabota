@@ -1,0 +1,23 @@
+import subprocess
+import seaborn as sns
+import matplotlib.pyplot as plt
+def is_number(str):
+    try:
+        float(str)
+        return True
+    except ValueError:
+        return False
+A = subprocess.check_output("main.py", shell=True, text=True)
+print(A)
+x = A.split("\n")
+for i in range(len(x)):
+    x[i] = x[i].replace("[", "").replace("]", "").split(" ")
+    x[i] = [float(j) for j in x[i] if is_number(j)]
+print(x)
+numbers = list(range(1, 11))
+plt.plot(numbers, sorted(x[0]))
+plt.show()
+plt.scatter(numbers, sorted(x[1]))
+plt.show()
+sns.barplot(x=numbers, y=x[2])
+plt.show()
