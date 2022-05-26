@@ -1,23 +1,32 @@
 import subprocess
 import seaborn as sns
 import matplotlib.pyplot as plt
-def is_number(str):
+from mpl_toolkits.mplot3d import Axes3D
+from typing import Any, List
+
+
+def is_number(element):
     try:
-        float(str)
+        float(element)
         return True
     except ValueError:
         return False
-A = subprocess.check_output("main.py", shell=True, text=True)
-print(A)
-x = A.split("\n")
-for i in range(len(x)):
-    x[i] = x[i].replace("[", "").replace("]", "").split(" ")
-    x[i] = [float(j) for j in x[i] if is_number(j)]
-print(x)
+
+
+result = subprocess.check_output("lab5_result.py", shell=True, text=True)
+data: List[Any] = result.split("\n")
+for i in range(len(data)):
+    data[i] = data[i].replace("[", "").replace("]", "").split(" ")
+    data[i] = [float(j) for j in data[i] if is_number(j)]
 numbers = list(range(1, 11))
-plt.plot(numbers, sorted(x[0]))
+plt.plot(numbers, sorted(data[0]))
 plt.show()
-plt.scatter(numbers, sorted(x[1]))
+plt.scatter(numbers, sorted(data[1]))
 plt.show()
-sns.barplot(x=numbers, y=x[2])
+sns.barplot(x=numbers, y=data[2])
+plt.show()
+fig = plt.figure(figsize=(6, 6))
+ax = Axes3D(fig, auto_add_to_figure=False)
+fig.add_axes(ax)
+sc = ax.scatter(data[0], data[1], data[2], s=40, c=numbers, cmap='rainbow')
 plt.show()
